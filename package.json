@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/MikeCheng1208/vue-metamask",
   "devDependencies": {
-    "autoprefixer": "^9.0.0",
+    "autoprefixer": "^9.0.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
@@ -48,7 +48,7 @@
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^15.2.6",
     "vue-template-compiler": "^2.5.16",
-    "webpack": "^4.16.1",
+    "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0",
     "webpack-manifest-plugin": "^2.0.3"
   }

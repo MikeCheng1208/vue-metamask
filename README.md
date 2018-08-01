@@ -1,2 +1,6 @@
+
 # vue-metamask
-Testing Metamask's status with Vue
+![vueMetaMask](./assets/vueMetaMask.jpg)
+
+> Testing Metamask's status with Vue
+
