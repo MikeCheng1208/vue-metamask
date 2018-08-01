@@ -1,8 +1,8 @@
 {
   "name": "vue-metamask",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Testing Metamask's status with Vue",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server --mode development --open",
     "deploy": "NODE_ENV=production webpack -p --mode production"

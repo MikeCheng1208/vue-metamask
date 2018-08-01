@@ -1,6 +1,7 @@
 <script>
 export default {
     props: {
+        //MetaMask Net default Main Net
         metaMaskId: {
             type: String,
             default: "1"
@@ -8,15 +9,13 @@ export default {
     },
     data(){
         return {
-            web3: null,
-            metaMaskId: this.props.metaMaskId,        
+            web3: null,   
             netID: '1',                         //User MetaMask netID
             MetaMaskAddress: "",                //User MetaMask Address
             Message: "",                        //Error Message
             Web3Interval: null,
             AccountInterval: null,
             NetworkInterval: null,
-            type: "Nologin",
             MetamaskMsg:{
                 LOAD_MATAMASK_WALLET_ERROR: "There's an error loading Metamask, please try again later.",
                 EMPTY_METAMASK_ACCOUNT: 'Please log in your Metamask to proceed.',
@@ -39,16 +38,16 @@ export default {
             if (this.web3 === null) return;
             this.web3.eth.getAccounts((err, accounts) => {
                 if (err != null) return this.Log(this.MetamaskMsg.LOAD_MATAMASK_WALLET_ERROR);
-                if (accounts.length === 0)  return this.Log(this.MetamaskMsg.EMPTY_METAMASK_ACCOUNT, 'Nologin');
-                this.MetaMaskAddress = accounts[0]; //User MetaMask Address
+                if (accounts.length === 0)  return this.Log(this.MetamaskMsg.EMPTY_METAMASK_ACCOUNT, 'NOLOGIN');
+                this.MetaMaskAddress = accounts[0];   //User MetaMask Address
             });
         },
         fetchNetWork() {
             this.web3.version.getNetwork((err, netID) => {
                 if (err != null) return this.Log(this.MetamaskMsg.METAMASK_TEST_NET);
-                if( this.MetaMaskAddress !== '' && this.metaMaskId !== netID) return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, 'NoMainNet');
-                this.netID = netID;
-            })
+                if( this.MetaMaskAddress !== '' && this.props.metaMaskId !== netID) return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, 'NOMAINNET');
+                this.netID = netID;     //User MetaMask's current status
+            });
         },
         Log(msg, type=""){
             this.Message = msg;
