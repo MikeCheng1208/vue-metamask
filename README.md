@@ -1,18 +1,24 @@
 # vue-metamask
 ![vueMetaMask](./assets/vueMetaMask.jpg)
+<p align=center>
+    <a target="_blank" href="https://travis-ci.org/MikeCheng1208/vue-metamask.svg?branch=develop" title="Build status">
+        <img src="https://travis-ci.org/MikeCheng1208/vue-metamask.svg?branch=develop">
+    </a>
+    <a target="_blank" href="https://vuejs.org/" title="vue">
+        <img src="https://img.shields.io/badge/vue-%3E%202.5.0-brightgreen.svg">
+    </a>
+    <a target="_blank" href="http://nodejs.org/download/" title="Node version">
+        <img src="https://img.shields.io/badge/node-%3E%3D%208.0.0-brightgreen.svg">
+    </a>
+    <a target="_blank" href="https://github.com/MikeCheng1208/vue-metamask/pulls" title="PRs Welcome">
+        <img src="https://img.shields.io/badge/PRs-welcome-blue.svg">
+    </a>
+</p>
 
 > Testing Metamask's status with Vue
 
-npm info :    
 [![NPM](https://nodei.co/npm/vue-metamask.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/vue-metamask/)
 
-npm link ( https://www.npmjs.com/package/vue-metamask )
-
-![vue-metamask. npm version](https://img.shields.io/npm/v/vue-metamask.svg) 
-![supported node version for vue-metamask.](https://img.shields.io/node/v/vue-metamask.svg) 
-![total npm downloads for vue-metamask.](https://img.shields.io/npm/dt/vue-metamask.svg) 
-![monthly npm downloads for vue-metamask.](https://img.shields.io/npm/dm/vue-metamask.svg) 
-![npm licence for vue-metamask.](https://img.shields.io/npm/l/vue-metamask.svg)
 
 NPM Install
 ```
@@ -26,6 +32,11 @@ And then import it:
     export default {
         components: {
             VueMetamask,
+        },
+        methods:{
+            onComplete(msg){
+                console.log('msg:', msg);
+            }
         }
     }
 </script>
