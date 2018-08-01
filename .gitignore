@@ -5,3 +5,4 @@ app
 .vscode
 *.lnk
 /.sass-cache
+dist
