@@ -1,2 +1,2 @@
-import MetaMask from './MetaMask.vue';
-export default MetaMask;
+import VueMetamask from './VueMetamask.vue';
+export default VueMetamask;
