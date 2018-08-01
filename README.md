@@ -58,7 +58,7 @@ Use
 
 ## Methods
 
-|data | type | value | functionality |
+|data | type | value | functionality |
 |-----------|-----------|-----------|---------------|
 |metaMaskId | String    |1 (default)| determine the status you want to check|
 |onComplete | Event | Callback | return current status
