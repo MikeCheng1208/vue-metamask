@@ -1,2 +1,2 @@
 # vue-metamask
-vue metamask state checker
+Testing Metamask's status with Vue

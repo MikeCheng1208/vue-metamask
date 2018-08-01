@@ -1,0 +1,7 @@
+{
+  "presets": ["env","stage-2"],
+  "plugins": [
+    "babel-plugin-transform-class-properties",
+    "transform-async-to-generator"
+  ]
+}
