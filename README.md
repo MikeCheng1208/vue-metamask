@@ -19,6 +19,8 @@
 
 [![NPM](https://nodei.co/npm/vue-metamask.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/vue-metamask/)
 
+## Deom
+![vueMetaMask](./assets/operates.gif)
 
 NPM Install
 ```
@@ -63,7 +65,7 @@ Use
 
 ## Methods
 
-|data | type | value | Functionality |
+|data | type | value | Functionality |
 |-----------|-----------|-----------|---------------|
 |UserMessage （ Optional ） | String    |Message| return setting state message|
 |onComplete | Event | Callback | return current data|
