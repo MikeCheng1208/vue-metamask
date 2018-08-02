@@ -19,7 +19,7 @@
 
 [![NPM](https://nodei.co/npm/vue-metamask.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/vue-metamask/)
 
-## Deom
+## Demo
 ![vueMetaMask](./assets/operates.gif)
 
 NPM Install
