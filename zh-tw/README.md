@@ -27,7 +27,7 @@ NPM 安裝
 npm i vue-metamask
 ```
 
-And then import it:
+然後導入它:
 ```
 <script>
     import VueMetamask from 'vue-metamask';
@@ -74,7 +74,7 @@ And then import it:
 <br/>
 
 
-## OnComplete 回傳資料
+## OnComplete 回傳資料
 
 |  key      |   類型     |    值     |  說明  |
 |-----------|-----------|-----------|---------------|
