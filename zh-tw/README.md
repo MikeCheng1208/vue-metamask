@@ -78,7 +78,7 @@ npm i vue-metamask
 
 |  key      |   類型     |    值     |  說明  |
 |-----------|-----------|-----------|---------------|
-| message   | String    | "message" | User 定義的訊息  | 
+| message   | String    | "message" | User 定義的訊息  | 
 | type      | String    | "MAINNET" | MAINNET<br/>NO_INSTALL_METAMASK<br/>NO_LOGIN<br/>NETWORK_ERROR | 
 | netID     | String    |    "1"    | User 目前的狀態 id | 
 
