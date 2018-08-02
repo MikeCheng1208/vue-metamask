@@ -15,7 +15,7 @@
     </a>
 </p>
 
-> Testing Metamask's status with Vue
+<p align=center>Testing Metamask's status with Vue</p>
 
 [![NPM](https://nodei.co/npm/vue-metamask.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/vue-metamask/)
 
@@ -33,9 +33,14 @@ And then import it:
         components: {
             VueMetamask,
         },
+        data(){
+            return {
+                msg: "This is demo net work"
+            }
+        },
         methods:{
-            onComplete(msg){
-                console.log('msg:', msg);
+            onComplete(data){
+                console.log('data:', data);
             }
         }
     }
@@ -47,7 +52,7 @@ Use
 <template>
     <div id="demo">
         <vue-metamask 
-            metaMaskId="1" 
+            UserMessage="msg" 
             @onComplete="onComplete"
         >
         </vue-metamask>
@@ -58,7 +63,24 @@ Use
 
 ## Methods
 
-|data | type | value | functionality |
+|data | type | value | Functionality |
 |-----------|-----------|-----------|---------------|
-|metaMaskId | String    |1 (default)| determine the status you want to check|
-|onComplete | Event | Callback | return current status
+|UserMessage （ Optional ） | String    |Message| return setting state message|
+|onComplete | Event | Callback | return current data|
+
+<br/>
+<br/>
+
+
+## OnComplete return data
+
+|  key      |   type    |    value  |  Description  |
+|-----------|-----------|-----------|---------------|
+| message   | String    | "message" | User-defined message | 
+| type      | String    | "MAINNET" | MAINNET<br/>NO_INSTALL_METAMASK<br/>NO_LOGIN<br/>NETWORK_ERROR | 
+| netID     | String    |    "1"    | Current user's Network id | 
+
+
+
+
+

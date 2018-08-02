@@ -1,28 +1,30 @@
 <script>
 export default {
     props: {
-        //MetaMask Net default Main Net
-        metaMaskId: {
+        UserMessage:{
             type: String,
-            default: "1"
-        },
+            default: "null"
+        }
     },
     data(){
         return {
-            web3: null,   
-            netID: '1',                         //User MetaMask netID
-            MetaMaskAddress: "",                //User MetaMask Address
-            Message: "",                        //Error Message
+            web3: null,
+            MetaMaskId: "1",        // main net netID
+            netID: '1',             // user metamask id
+            MetaMaskAddress: "",    // user Address
             Web3Interval: null,
             AccountInterval: null,
             NetworkInterval: null,
+            stateLog: null,
+            isComplete: false,
+            type: "INIT",
             MetamaskMsg:{
-                LOAD_MATAMASK_WALLET_ERROR: "There's an error loading Metamask, please try again later.",
-                EMPTY_METAMASK_ACCOUNT: 'Please log in your Metamask to proceed.',
-                METAMASK_ACCOUNT: 'You are choosing this Metamask wallet:',
-                NETWORK_ERROR: "There's a connection error, please try again.",
-                METAMASK_NOT_INSTALL: 'Please download Metamask to proceed.',
-                METAMASK_TEST_NET: 'Please choose mainnet to proceed this application.'
+                LOAD_MATAMASK_WALLET_ERROR: 'Loading metamask error, please try later',
+                EMPTY_METAMASK_ACCOUNT: 'Please log in to your metamask to continue with this app.',
+                NETWORK_ERROR: 'The connection is abnormal, please try again',
+                METAMASK_NOT_INSTALL: 'Please install metamask for this application',
+                METAMASK_TEST_NET: 'Currently not in the main network.',
+                METAMASK_MAIN_NET: 'Currently Main network',
             }
         };
     },
@@ -31,27 +33,39 @@ export default {
             let web3 = window.web3;
             if (typeof web3 === 'undefined') {
                 this.web3 = null;
-                this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL);
+                this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
             }
         },
         fetchAccounts() {
             if (this.web3 === null) return;
             this.web3.eth.getAccounts((err, accounts) => {
-                if (err != null) return this.Log(this.MetamaskMsg.LOAD_MATAMASK_WALLET_ERROR);
-                if (accounts.length === 0)  return this.Log(this.MetamaskMsg.EMPTY_METAMASK_ACCOUNT, 'NOLOGIN');
-                this.MetaMaskAddress = accounts[0];   //User MetaMask Address
+                if (err != null) return this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
+                if (accounts.length === 0){
+                    this.MetaMaskAddress = "";
+                    this.Log(this.MetamaskMsg.EMPTY_METAMASK_ACCOUNT, 'NO_LOGIN');
+                    return;
+                } 
+                this.MetaMaskAddress = accounts[0]; // user Address
             });
         },
         fetchNetWork() {
             this.web3.version.getNetwork((err, netID) => {
-                if (err != null) return this.Log(this.MetamaskMsg.METAMASK_TEST_NET);
-                if( this.MetaMaskAddress !== '' && this.props.metaMaskId !== netID) return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, 'NOMAINNET');
-                this.netID = netID;     //User MetaMask's current status
-            });
+                if (err != null) return this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
+                this.netID = netID;    //User MetaMask's current status
+                if( this.MetaMaskAddress !== '' && this.MetaMaskId !== netID) return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, 'NO_MAINNET');
+                if( this.MetaMaskAddress !== '') this.Log(this.MetamaskMsg.METAMASK_MAIN_NET, "MAINNET");
+            })
         },
         Log(msg, type=""){
-            this.Message = msg;
-            this.$emit("onComplete", {msg});
+            const letType = type;
+            if(letType === this.type) return;
+            const message = this.UserMessage === "null" ? msg : this.UserMessage;
+            this.type = type;
+            this.$emit("onComplete", {
+                message,
+                type,
+                netID: this.netID
+            });
         }
     },
     mounted(){
@@ -66,16 +80,14 @@ export default {
             this.NetworkInterval = setInterval(()=>this.fetchNetWork(), 1000);
         } else {
             this.web3 = null;
-            this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL);
+            this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
         }
     }
 };
 </script>
-
 <template>
     <div class="vue-metamask"></div>
 </template>
-
 <style lang='scss' scoped>
     .vue-metamask{
         position: fixed;
