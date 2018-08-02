@@ -67,7 +67,7 @@ Use
 
 |data | type | value | Functionality |
 |-----------|-----------|-----------|---------------|
-|UserMessage （ Optional ） | String    |Message| return setting state message|
+|UserMessage （ Optional ） | String    |Message| return setting status message|
 |onComplete | Event | Callback | return current data|
 
 <br/>
@@ -80,7 +80,7 @@ Use
 |-----------|-----------|-----------|---------------|
 | message   | String    | "message" | User-defined message | 
 | type      | String    | "MAINNET" | MAINNET<br/>NO_INSTALL_METAMASK<br/>NO_LOGIN<br/>NETWORK_ERROR | 
-| netID     | String    |    "1"    | Current user's Network id | 
+| netID     | String    |    "1"    | User's current network id | 
 
 
 
