@@ -1,7 +1,7 @@
 <script>
 export default {
     props: {
-        UserMessage:{
+        userMessage:{
             type: String,
             default: "null"
         }
@@ -59,7 +59,7 @@ export default {
         Log(msg, type=""){
             const letType = type;
             if(letType === this.type) return;
-            const message = this.UserMessage === "null" ? msg : this.UserMessage;
+            const message = this.userMessage === "null" ? msg : this.userMessage;
             this.type = type;
             this.$emit("onComplete", {
                 message,

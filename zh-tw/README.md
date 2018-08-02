@@ -1,5 +1,5 @@
 # vue-metamask
-![vueMetaMask](./assets/vueMetaMask.jpg)
+![vueMetaMask](../assets/vueMetaMask.jpg)
 <p align=center>
     <a target="_blank" href="https://travis-ci.org/MikeCheng1208/vue-metamask.svg?branch=develop" title="Build status">
         <img src="https://travis-ci.org/MikeCheng1208/vue-metamask.svg?branch=develop">
@@ -15,14 +15,14 @@
     </a>
 </p>
 
-<p align=center>Testing Metamask's status with Vue</p>
+<p align=center>基於Vue底下檢查 Metamask 的狀態</p>
 
 [![NPM](https://nodei.co/npm/vue-metamask.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/vue-metamask/)
 
 ## Demo
-![vueMetaMask](./assets/operates.gif)
+![vueMetaMask](../assets/operates.gif)
 
-NPM Install
+NPM 安裝
 ```
 npm i vue-metamask
 ```
@@ -49,7 +49,7 @@ And then import it:
 </script>
 ```
 
-Use
+使用
 ```
 <template>
     <div id="demo">
@@ -63,24 +63,24 @@ Use
 ```
 
 
-## Methods
+## 方法
 
-|data | type | value | Functionality |
+|data | 類型 | 值 | 功能 |
 |-----------|-----------|-----------|---------------|
-|userMessage （ Optional ） | String    |Message| return setting status message|
-|onComplete | Event | Callback | return current data|
+|userMessage （ 選填 ） | String    | 傳入的訊息 | 回傳自己設定的狀態訊息|
+|onComplete | 事件     | Callback | 回傳目前的狀態 |
 
 <br/>
 <br/>
 
 
-## OnComplete return data
+## OnComplete 回傳資料
 
-|  key      |   type    |    value  |  Description  |
+|  key      |   類型     |    值     |  說明  |
 |-----------|-----------|-----------|---------------|
-| message   | String    | "message" | User-defined message | 
+| message   | String    | "message" | User 定義的訊息  | 
 | type      | String    | "MAINNET" | MAINNET<br/>NO_INSTALL_METAMASK<br/>NO_LOGIN<br/>NETWORK_ERROR | 
-| netID     | String    |    "1"    | User's current network id | 
+| netID     | String    |    "1"    | User 目前的狀態 id | 
 
 
 
