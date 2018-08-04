@@ -62,9 +62,11 @@ export default {
             const message = this.userMessage === "null" ? msg : this.userMessage;
             this.type = type;
             this.$emit("onComplete", {
-                message,
+                web3: this.web3,
                 type,
-                netID: this.netID
+                metaMaskAddress: this.MetaMaskAddress,
+                message,
+                netID: this.netID,
             });
         }
     },
