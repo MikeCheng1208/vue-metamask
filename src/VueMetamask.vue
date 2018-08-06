@@ -29,14 +29,14 @@ export default {
         };
     },
     methods:{
-        fetchWeb3() {
+        checkWeb3() {
             let web3 = window.web3;
             if (typeof web3 === 'undefined') {
                 this.web3 = null;
                 this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
             }
         },
-        fetchAccounts() {
+        checkAccounts() {
             if (this.web3 === null) return;
             this.web3.eth.getAccounts((err, accounts) => {
                 if (err != null) return this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
@@ -48,11 +48,18 @@ export default {
                 this.MetaMaskAddress = accounts[0]; // user Address
             });
         },
-        fetchNetWork() {
+        checkNetWork() {
             this.web3.version.getNetwork((err, netID) => {
+                // Main Network: 1
+                // Ropsten Test Network: 3
+                // Kovan Test Network: 42
+                // Rinkeby Test Network: 4
                 if (err != null) return this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
                 this.netID = netID;    //User MetaMask's current status
-                if( this.MetaMaskAddress !== '' && this.MetaMaskId !== netID) return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, 'NO_MAINNET');
+                if( this.MetaMaskAddress !== '' && netID === '1') return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, 'MAINNET');
+                if( this.MetaMaskAddress !== '' && netID === '3') return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, 'ROPSTEN');
+                if( this.MetaMaskAddress !== '' && netID === '42') return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, 'LOVAN');
+                if( this.MetaMaskAddress !== '' && netID === '4') return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, 'RINKEBY');
                 if( this.MetaMaskAddress !== '') this.Log(this.MetamaskMsg.METAMASK_MAIN_NET, "MAINNET");
             })
         },
@@ -75,11 +82,11 @@ export default {
         if (typeof web3 !== 'undefined') {
             window.web3 = new Web3(web3.currentProvider);
             this.web3 = window.web3;
-            this.fetchAccounts();
-            this.fetchNetWork();
-            this.Web3Interval = setInterval(()=> this.fetchWeb3(), 1000);
-            this.AccountInterval = setInterval(()=> this.fetchAccounts(), 1000);
-            this.NetworkInterval = setInterval(()=>this.fetchNetWork(), 1000);
+            this.checkAccounts();
+            this.checkNetWork();
+            this.Web3Interval = setInterval(()=> this.checkWeb3(), 1000);
+            this.AccountInterval = setInterval(()=> this.checkAccounts(), 1000);
+            this.NetworkInterval = setInterval(()=>this.checkNetWork(), 1000);
         } else {
             this.web3 = null;
             this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
