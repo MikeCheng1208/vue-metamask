@@ -78,6 +78,8 @@ Use
 
 |  key      |   type    |    value  |  Description  |
 |-----------|-----------|-----------|---------------|
+| web3      | Object    | function  | web3  | 
+| metaMaskAddress | String | 0x09F38A7F...  | Ｍetamask address  | 
 | message   | String    | "message" | User-defined message | 
 | type      | String    | "MAINNET" | MAINNET<br/>NO_INSTALL_METAMASK<br/>NO_LOGIN<br/>NETWORK_ERROR | 
 | netID     | String    |    "1"    | User's current network id | 
