@@ -23,12 +23,10 @@ const config = {
     module:{
         rules:[
             {
-                test: /\.(sass|scss)$/,
+                test: /\.(css)$/,
                 use: [
                     'vue-style-loader',
                     'css-loader',
-                    'postcss-loader',
-                    'sass-loader',
                 ]
             },
             {
@@ -42,16 +40,7 @@ const config = {
         ]
     },
     plugins: [
-        new VueLoaderPlugin(),
-        new webpack.LoaderOptionsPlugin({
-            vue: {
-                postcss: [require('autoprefixer')(
-                    {
-                        browsers: ['> 1%', 'last 5 versions', 'Firefox >= 45', 'iOS >=8', 'Safari >=8','ie >= 10']
-                    }
-                )]
-            }
-        })
+        new VueLoaderPlugin()
     ]
 };
 
