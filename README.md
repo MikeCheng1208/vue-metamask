@@ -22,9 +22,15 @@
 ## Demo
 ![vueMetaMask](./assets/operates.gif)
 
+
+MetaMask will introduce an optional “Privacy Mode”, which requires that dapps ask permission to view users’ accounts. Dapps should update their code to support this feature, which will be enabled by default in the future.
+<br/>
+<a href="https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8">Reference link</a>
+<br/>
+
 NPM Install
 ```
-npm i vue-metamask
+npm i vue-metamask -S
 ```
 
 And then import it:
@@ -81,10 +87,12 @@ Use
 | web3      | Object    | function  | web3  | 
 | metaMaskAddress | String | 0x09F38A7F...  | Ｍetamask address  | 
 | message   | String    | "message" | User-defined message | 
-| type      | String    | "MAINNET" | MAINNET<br/>NO_INSTALL_METAMASK<br/>NO_LOGIN<br/>NETWORK_ERROR | 
+| type      | String    | "MAINNET" | MAINNET<br/>NO_INSTALL_METAMASK<br/>NO_LOGIN<br/>NETWORK_ERROR<br/>USER_DENIED_ACCOUNT_AUTHORIZATION | 
 | netID     | String    |    "1"    | User's current network id | 
 
 
+<br/>
 
-
+# License
+MIT.
 

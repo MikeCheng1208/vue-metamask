@@ -25,6 +25,7 @@ export default {
                 METAMASK_NOT_INSTALL: 'Please install metamask for this application',
                 METAMASK_TEST_NET: 'Currently not in the main network.',
                 METAMASK_MAIN_NET: 'Currently Main network',
+                USER_DENIED_ACCOUNT_AUTHORIZATION: 'User denied account authorization',
             }
         };
     },
@@ -39,6 +40,8 @@ export default {
         checkAccounts() {
             if (this.web3 === null) return;
             this.web3.eth.getAccounts((err, accounts) => {
+                console.log();
+                
                 if (err != null) return this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
                 if (accounts.length === 0){
                     this.MetaMaskAddress = "";
@@ -75,30 +78,41 @@ export default {
                 message,
                 netID: this.netID,
             });
-        }
-    },
-    mounted(){
-        let web3 = window.web3;
-        if (typeof web3 !== 'undefined') {
-            window.web3 = new Web3(web3.currentProvider);
-            this.web3 = window.web3;
+        },
+        web3TimerCheck(web3){
+            this.web3 = web3;
             this.checkAccounts();
             this.checkNetWork();
             this.Web3Interval = setInterval(()=> this.checkWeb3(), 1000);
             this.AccountInterval = setInterval(()=> this.checkAccounts(), 1000);
             this.NetworkInterval = setInterval(()=>this.checkNetWork(), 1000);
+        }
+    },
+    async mounted(){
+        if (window.ethereum) {
+            window.web3 = new Web3(ethereum);
+            try {
+                await ethereum.enable();
+                this.web3TimerCheck(window.web3);
+            } catch (error) {
+                this.Log(this.MetamaskMsg.USER_DENIED_ACCOUNT_AUTHORIZATION, "USER_DENIED_ACCOUNT_AUTHORIZATION");
+            }
+        } else if (window.web3) {
+            window.web3 = new Web3(web3.currentProvider);
+            this.web3TimerCheck(window.web3);
         } else {
             this.web3 = null;
             this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
+            console.error('Non-Ethereum browser detected. You should consider trying MetaMask!');
         }
     }
 };
 </script>
 <template>
-    <div class="vue-metamask"></div>
+    <div id="vue-metamask"></div>
 </template>
 <style scoped>
-    .vue-metamask{
+    #vue-metamask{
         position: fixed;
         top: 0;
         left: 0;
