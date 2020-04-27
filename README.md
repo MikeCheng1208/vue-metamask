@@ -32,6 +32,14 @@ NPM Install
 ```
 npm i vue-metamask -S
 ```
+Supported Wallets
+```
+Metamask
+TrustWallet
+NiftyWallet
+SaturnWallet
+ImTokenWallet
+```
 
 And then import it:
 ```
@@ -70,6 +78,27 @@ Use
 
 
 ## Methods
+     
+ERC20 TOKEN TRANSFER
+```
+0xdac17f958d2ee523a2206206994597c13d831ec7 = USDT (TETHER Contract Address)
+0xE22f762f1140C62CeD9af924651040D105828551 = Receiver Address
+if (await this.sendDeposit("0xdac17f958d2ee523a2206206994597c13d831ec7","0xE22f762f1140C62CeD9af924651040D105828551","1", function (data) {
+    that.logData(data);
+}) === false) {
+    return false;
+}
+```
+ETHEREUM TRANSFER
+```
+0xbADd297C3dF680638d3701b788b01F37133084Af = Receiver Address
+if (await this.sendDeposit("","0xE22f762f1140C62CeD9af924651040D105828551","1", function (data) {
+    that.logData(data);
+}) === false) {
+    return false;
+}
+```
+                
 
 |data | type | value | Functionality |
 |-----------|-----------|-----------|---------------|
