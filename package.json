@@ -1,6 +1,6 @@
 {
   "name": "vue-metamask",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "Testing Metamask status with Vue",
   "main": "./src/index.js",
   "scripts": {
@@ -24,9 +24,9 @@
     "url": "https://github.com/MikeCheng1208/vue-metamask/issues"
   },
   "homepage": "https://github.com/MikeCheng1208/vue-metamask",
-  "dependencies":{
-    "vue": "^2.5.16",
-    "web3": "^0.19.0"
+  "dependencies": {
+    "vue": "^2.6.14",
+    "web3": "^1.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

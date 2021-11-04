@@ -55,25 +55,31 @@ export default {
       });
     },
     checkNetWork() {
-      this.web3.version.getNetwork((err, netID) => {
+      try {
         // Main Network: 1
         // Ropsten Test Network: 3
         // Kovan Test Network: 42
         // Rinkeby Test Network: 4
-        if (err != null)
-          return this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
-        this.netID = netID; //User MetaMask's current status
-        if (this.MetaMaskAddress !== "" && netID === "1")
-          return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "MAINNET");
-        if (this.MetaMaskAddress !== "" && netID === "3")
-          return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "ROPSTEN");
-        if (this.MetaMaskAddress !== "" && netID === "42")
-          return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "LOVAN");
-        if (this.MetaMaskAddress !== "" && netID === "4")
-          return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "RINKEBY");
-        if (this.MetaMaskAddress !== "")
-          this.Log(this.MetamaskMsg.METAMASK_MAIN_NET, "MAINNET");
-      });
+        // Goerli Test Network: 5
+        this.web3.eth.net.getId()
+        .then(netId => {
+          this.netID = netId
+          if (this.MetaMaskAddress !== "" && netId === 1)
+            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "MAINNET");
+          if (this.MetaMaskAddress !== "" && netId === 3)
+            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "ROPSTEN");
+          if (this.MetaMaskAddress !== "" && netId === 42)
+            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "KOVAN");
+          if (this.MetaMaskAddress !== "" && netId === 4)
+            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "RINKEBY");
+          if (this.MetaMaskAddress !== "" && netId === 5)
+            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "GOERLI");
+          if (this.MetaMaskAddress !== "")
+            this.Log(this.MetamaskMsg.METAMASK_MAIN_NET, "MAINNET");
+        })
+      } catch (err) {
+        this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
+      }
     },
     Log(msg, type = "") {
       const letType = type;
