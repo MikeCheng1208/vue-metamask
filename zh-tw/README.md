@@ -62,11 +62,46 @@ npm i vue-metamask -S
 </template>
 ```
 
+---
+## 如何設定初始化要不要連接 metamask
+```
+<template>
+    <div id="demo">
+
+        // 關閉初始化連接
+        <vue-metamask ref="metamask" :initConnect="false"></vue-metamask>
+        
+        // 點擊連接 metamask
+        <button @click="connect">connect</button>
+    </div>
+</template>
+```
+
+### 抓取 metamask 組件實體使用 init 方法
+```
+<script>
+    import VueMetamask from 'vue-metamask';
+    export default {
+        components: {
+            VueMetamask,
+        },
+        methods:{
+            connect() {
+                this.$refs.metamask.init();
+            }
+        }
+    }
+</script>
+```
+
+---
+
 
 ## 方法
 
 |data | 類型 | 值 | 功能 |
 |-----------|-----------|-----------|---------------|
+|initConnect | Boolean    |true (預設)| 是否一開始連接 metamask |
 |userMessage （ 選填 ） | String    | 傳入的訊息 | 回傳自己設定的狀態訊息|
 |onComplete | 事件     | Callback | 回傳目前的狀態 |
 

@@ -67,12 +67,44 @@ Use
     </div>
 </template>
 ```
+---
+## How to use init connect option
+```
+<template>
+    <div id="demo">
 
+        // close init connect
+        <vue-metamask ref="metamask" :initConnect="false"></vue-metamask>
+        
+        // click button call Init
+        <button @click="connect">connect</button>
+    </div>
+</template>
+```
 
+### Get ref target use init methods
+```
+<script>
+    import VueMetamask from 'vue-metamask';
+    export default {
+        components: {
+            VueMetamask,
+        },
+        methods:{
+            connect() {
+                this.$refs.metamask.init();
+            }
+        }
+    }
+</script>
+```
+
+---
 ## Methods
 
 |data | type | value | Functionality |
 |-----------|-----------|-----------|---------------|
+|initConnect | Boolean    |true (default)| Whether to connect initially |
 |userMessage （ Optional ） | String    |Message| return setting status message|
 |onComplete | Event | Callback | return current data|
 
