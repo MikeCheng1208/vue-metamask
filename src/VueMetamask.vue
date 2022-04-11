@@ -6,6 +6,10 @@ export default {
       type: String,
       default: "null",
     },
+    initConnect: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -61,9 +65,8 @@ export default {
         // Kovan Test Network: 42
         // Rinkeby Test Network: 4
         // Goerli Test Network: 5
-        this.web3.eth.net.getId()
-        .then(netId => {
-          this.netID = netId
+        this.web3.eth.net.getId().then((netId) => {
+          this.netID = netId;
           if (this.MetaMaskAddress !== "" && netId === 1)
             return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "MAINNET");
           if (this.MetaMaskAddress !== "" && netId === 3)
@@ -76,7 +79,7 @@ export default {
             return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "GOERLI");
           if (this.MetaMaskAddress !== "")
             this.Log(this.MetamaskMsg.METAMASK_MAIN_NET, "MAINNET");
-        })
+        });
       } catch (err) {
         this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
       }
@@ -102,28 +105,33 @@ export default {
       this.AccountInterval = setInterval(() => this.checkAccounts(), 1000);
       this.NetworkInterval = setInterval(() => this.checkNetWork(), 1000);
     },
-  },
-  async mounted() {
-    if (window.ethereum) {
-      window.web3 = new Web3(ethereum);
-      try {
-        await ethereum.enable();
+    async init() {
+      if (window.ethereum) {
+        window.web3 = new Web3(ethereum);
+        try {
+          await ethereum.enable();
+          this.web3TimerCheck(window.web3);
+        } catch (error) {
+          this.Log(
+            this.MetamaskMsg.USER_DENIED_ACCOUNT_AUTHORIZATION,
+            "USER_DENIED_ACCOUNT_AUTHORIZATION"
+          );
+        }
+      } else if (window.web3) {
+        window.web3 = new Web3(web3.currentProvider);
         this.web3TimerCheck(window.web3);
-      } catch (error) {
-        this.Log(
-          this.MetamaskMsg.USER_DENIED_ACCOUNT_AUTHORIZATION,
-          "USER_DENIED_ACCOUNT_AUTHORIZATION"
+      } else {
+        this.web3 = null;
+        this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
+        console.error(
+          "Non-Ethereum browser detected. You should consider trying MetaMask!"
         );
       }
-    } else if (window.web3) {
-      window.web3 = new Web3(web3.currentProvider);
-      this.web3TimerCheck(window.web3);
-    } else {
-      this.web3 = null;
-      this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
-      console.error(
-        "Non-Ethereum browser detected. You should consider trying MetaMask!"
-      );
+    },
+  },
+  mounted() {
+    if (this.initConnect) {
+      this.init();
     }
   },
 };
