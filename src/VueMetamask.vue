@@ -109,7 +109,7 @@ export default {
       if (window.ethereum) {
         window.web3 = new Web3(ethereum);
         try {
-          await ethereum.enable();
+          await ethereum.send("eth_requestAccounts");
           this.web3TimerCheck(window.web3);
         } catch (error) {
           this.Log(
