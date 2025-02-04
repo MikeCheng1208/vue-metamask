@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue metamask control init example</title>
+  </head>
+  <body>
+    <div id="app">
+      <vue-metamask ref="metamask" :init-connect="false"></vue-metamask>
+
+      <button @click="connect">connect</button>
+    </div>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.41/vue.esm-browser.prod.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import { createApp, ref } from "vue";
+      import VueMetamask from "../dist/vue-metamask.es.js";
+      createApp({
+        components: {
+          VueMetamask,
+        },
+        setup() {
+          const metamask = ref(null);
+
+          const connect = () => {
+            metamask.value.init();
+          };
+
+          return { metamask, connect };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

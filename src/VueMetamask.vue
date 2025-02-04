@@ -1,144 +1,145 @@
-<script>
+<script setup>
+import { ref, onMounted, defineEmits, defineExpose } from "vue";
 import Web3 from "web3";
-export default {
-  props: {
-    userMessage: {
-      type: String,
-      default: "null",
-    },
-    initConnect: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  data() {
-    return {
-      web3: null,
-      MetaMaskId: "1", // main net netID
-      netID: "1", // user metamask id
-      MetaMaskAddress: "", // user Address
-      Web3Interval: null,
-      AccountInterval: null,
-      NetworkInterval: null,
-      stateLog: null,
-      isComplete: false,
-      type: "INIT",
-      MetamaskMsg: {
-        LOAD_MATAMASK_WALLET_ERROR: "Loading metamask error, please try later",
-        EMPTY_METAMASK_ACCOUNT:
-          "Please log in to your metamask to continue with this app.",
-        NETWORK_ERROR: "The connection is abnormal, please try again",
-        METAMASK_NOT_INSTALL: "Please install metamask for this application",
-        METAMASK_TEST_NET: "Currently not in the main network.",
-        METAMASK_MAIN_NET: "Currently Main network",
-        USER_DENIED_ACCOUNT_AUTHORIZATION: "User denied account authorization",
-      },
-    };
-  },
-  methods: {
-    checkWeb3() {
-      let web3 = window.web3;
-      if (typeof web3 === "undefined") {
-        this.web3 = null;
-        this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
-      }
-    },
-    checkAccounts() {
-      if (this.web3 === null) return;
-      this.web3.eth.getAccounts((err, accounts) => {
-        console.log();
 
-        if (err != null)
-          return this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
-        if (accounts.length === 0) {
-          this.MetaMaskAddress = "";
-          this.Log(this.MetamaskMsg.EMPTY_METAMASK_ACCOUNT, "NO_LOGIN");
-          return;
-        }
-        this.MetaMaskAddress = accounts[0]; // user Address
-      });
-    },
-    checkNetWork() {
-      try {
-        // Main Network: 1
-        // Ropsten Test Network: 3
-        // Kovan Test Network: 42
-        // Rinkeby Test Network: 4
-        // Goerli Test Network: 5
-        this.web3.eth.net.getId().then((netId) => {
-          this.netID = netId;
-          if (this.MetaMaskAddress !== "" && netId === 1)
-            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "MAINNET");
-          if (this.MetaMaskAddress !== "" && netId === 3)
-            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "ROPSTEN");
-          if (this.MetaMaskAddress !== "" && netId === 42)
-            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "KOVAN");
-          if (this.MetaMaskAddress !== "" && netId === 4)
-            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "RINKEBY");
-          if (this.MetaMaskAddress !== "" && netId === 5)
-            return this.Log(this.MetamaskMsg.METAMASK_TEST_NET, "GOERLI");
-          if (this.MetaMaskAddress !== "")
-            this.Log(this.MetamaskMsg.METAMASK_MAIN_NET, "MAINNET");
-        });
-      } catch (err) {
-        this.Log(this.MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
-      }
-    },
-    Log(msg, type = "") {
-      const letType = type;
-      if (letType === this.type) return;
-      const message = this.userMessage === "null" ? msg : this.userMessage;
-      this.type = type;
-      this.$emit("onComplete", {
-        web3: this.web3,
-        type,
-        metaMaskAddress: this.MetaMaskAddress,
-        message,
-        netID: this.netID,
-      });
-    },
-    web3TimerCheck(web3) {
-      this.web3 = web3;
-      this.checkAccounts();
-      this.checkNetWork();
-      this.Web3Interval = setInterval(() => this.checkWeb3(), 1000);
-      this.AccountInterval = setInterval(() => this.checkAccounts(), 1000);
-      this.NetworkInterval = setInterval(() => this.checkNetWork(), 1000);
-    },
-    async init() {
-      if (window.ethereum) {
-        window.web3 = new Web3(ethereum);
-        try {
-          await ethereum.send("eth_requestAccounts");
-          this.web3TimerCheck(window.web3);
-        } catch (error) {
-          this.Log(
-            this.MetamaskMsg.USER_DENIED_ACCOUNT_AUTHORIZATION,
-            "USER_DENIED_ACCOUNT_AUTHORIZATION"
-          );
-        }
-      } else if (window.web3) {
-        window.web3 = new Web3(web3.currentProvider);
-        this.web3TimerCheck(window.web3);
-      } else {
-        this.web3 = null;
-        this.Log(this.MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
-        console.error(
-          "Non-Ethereum browser detected. You should consider trying MetaMask!"
-        );
-      }
-    },
+const props = defineProps({
+  userMessage: {
+    type: String,
+    default: "null",
   },
-  mounted() {
-    if (this.initConnect) {
-      this.init();
-    }
+  initConnect: {
+    type: Boolean,
+    default: true,
   },
+});
+
+const emit = defineEmits(["complete"]);
+
+const web3 = ref(null);
+// const MetaMaskId = ref("1"); // main net netID
+const netID = ref("1"); // user metamask id
+const MetaMaskAddress = ref(""); // user Address
+const Web3Interval = ref(null);
+const AccountInterval = ref(null);
+const NetworkInterval = ref(null);
+// const stateLog = ref(null);
+// const isComplete = ref(false);
+const type = ref("INIT");
+
+const MetamaskMsg = {
+  LOAD_MATAMASK_WALLET_ERROR: "Loading metamask error, please try later",
+  EMPTY_METAMASK_ACCOUNT:
+    "Please log in to your metamask to continue with this app.",
+  NETWORK_ERROR: "The connection is abnormal, please try again",
+  METAMASK_NOT_INSTALL: "Please install metamask for this application",
+  METAMASK_TEST_NET: "Currently not in the main network.",
+  METAMASK_MAIN_NET: "Currently Main network",
+  USER_DENIED_ACCOUNT_AUTHORIZATION: "User denied account authorization",
 };
+
+const checkWeb3 = () => {
+  if (typeof window.ethereum === "undefined") {
+    web3.value = null;
+    Log(MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
+  }
+};
+
+const checkAccounts = async () => {
+  if (web3.value === null) return;
+  try {
+    const accounts = await web3.value.eth.getAccounts();
+    if (accounts.length === 0) {
+      MetaMaskAddress.value = "";
+      Log(MetamaskMsg.EMPTY_METAMASK_ACCOUNT, "NO_LOGIN");
+      return;
+    }
+    MetaMaskAddress.value = accounts[0];
+  } catch (err) {
+    Log(MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
+  }
+};
+
+const checkNetWork = async () => {
+  try {
+    const chainId = await web3.value.eth.getChainId();
+    netID.value = chainId;
+    if (MetaMaskAddress.value === "") return;
+    const networkMap = {
+      1: { message: MetamaskMsg.METAMASK_MAIN_NET, type: "MAINNET" },
+      3: { message: MetamaskMsg.METAMASK_TEST_NET, type: "ROPSTEN" },
+      42: { message: MetamaskMsg.METAMASK_TEST_NET, type: "KOVAN" },
+      4: { message: MetamaskMsg.METAMASK_TEST_NET, type: "RINKEBY" },
+      5: { message: MetamaskMsg.METAMASK_TEST_NET, type: "GOERLI" },
+    };
+    const network = networkMap[chainId] || {
+      message: MetamaskMsg.METAMASK_TEST_NET,
+      type: "UNKNOWN",
+    };
+    Log(network.message, network.type);
+  } catch (err) {
+    Log(MetamaskMsg.NETWORK_ERROR, "NETWORK_ERROR");
+  }
+};
+
+const Log = (msg, newType = "") => {
+  if (newType === type.value) return;
+  const message = props.userMessage === "null" ? msg : props.userMessage;
+  type.value = newType;
+
+  emit("complete", {
+    web3: web3.value,
+    type: newType,
+    metaMaskAddress: MetaMaskAddress.value,
+    message,
+    netID: netID.value,
+  });
+};
+
+const web3TimerCheck = (web3Instance) => {
+  web3.value = web3Instance;
+  checkAccounts();
+  checkNetWork();
+  Web3Interval.value = setInterval(() => checkWeb3(), 1000);
+  AccountInterval.value = setInterval(() => checkAccounts(), 1000);
+  NetworkInterval.value = setInterval(() => checkNetWork(), 1000);
+};
+
+const init = async () => {
+  if (window.ethereum) {
+    const web3Instance = new Web3(window.ethereum);
+    try {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      web3TimerCheck(web3Instance);
+    } catch (error) {
+      Log(
+        MetamaskMsg.USER_DENIED_ACCOUNT_AUTHORIZATION,
+        "USER_DENIED_ACCOUNT_AUTHORIZATION"
+      );
+    }
+  } else {
+    web3.value = null;
+    Log(MetamaskMsg.METAMASK_NOT_INSTALL, "NO_INSTALL_METAMASK");
+    console.error(
+      "Non-Ethereum browser detected. You should consider trying MetaMask!"
+    );
+  }
+};
+
+defineExpose({
+  init,
+});
+
+onMounted(() => {
+  if (props.initConnect) {
+    init();
+  }
+});
 </script>
+
 <template>
   <div id="vue-metamask"></div>
 </template>
+
 <style scoped>
 #vue-metamask {
   position: fixed;
