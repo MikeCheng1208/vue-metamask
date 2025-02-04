@@ -1,14 +1,17 @@
 # vue-metamask
 ![vueMetaMask](./assets/vueMetaMask.jpg)
 <p align=center>
-    <a target="_blank" href="https://travis-ci.org/MikeCheng1208/vue-metamask.svg?branch=develop" title="Build status">
-        <img src="https://travis-ci.org/MikeCheng1208/vue-metamask.svg?branch=develop">
-    </a>
     <a target="_blank" href="https://vuejs.org/" title="vue">
-        <img src="https://img.shields.io/badge/vue-%3E%202.5.0-brightgreen.svg">
+        <img src="https://img.shields.io/badge/vue-%3E%203.0.0-brightgreen.svg">
     </a>
     <a target="_blank" href="http://nodejs.org/download/" title="Node version">
-        <img src="https://img.shields.io/badge/node-%3E%3D%208.0.0-brightgreen.svg">
+        <img src="https://img.shields.io/badge/node-%3E%3D%2020.0.0-brightgreen.svg">
+    </a>
+    <a target="_blank" href="http://nodejs.org/download/" title="Vite version">
+        <img src="https://img.shields.io/badge/vite-%3E%3D%206.0.0-brightgreen.svg">
+    </a>
+    <a target="_blank" href="http://nodejs.org/download/" title="Vite version">
+        <img src="https://img.shields.io/badge/web3-%3E%3D%204.0.0-brightgreen.svg">
     </a>
     <a target="_blank" href="https://github.com/MikeCheng1208/vue-metamask/pulls" title="PRs Welcome">
         <img src="https://img.shields.io/badge/PRs-welcome-blue.svg">
@@ -17,7 +20,12 @@
 
 <p align=center>Testing Metamask's status with Vue</p>
 
-[![NPM](https://nodei.co/npm/vue-metamask.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/vue-metamask/)
+<p align="center">
+<a target="_blank" href="https://www.npmjs.com/package/mike-vue-ui">
+  <img src="https://nodei.co/npm/vue-metamask.png?downloads=true&downloadRank=true&stars=true" alt="NPM version">
+</a>
+</p>
+
 
 ## Demo
 ![vueMetaMask](./assets/operates.gif)
@@ -34,69 +42,56 @@ npm i vue-metamask -S
 ```
 
 And then import it:
-```
-<script>
-    import VueMetamask from 'vue-metamask';
-    export default {
-        components: {
-            VueMetamask,
-        },
-        data(){
-            return {
-                msg: "This is demo net work"
-            }
-        },
-        methods:{
-            onComplete(data){
-                console.log('data:', data);
-            }
-        }
-    }
+```vue
+<script setup>
+    import { ref } from "vue";
+    import VueMetamask from "vue-metamask";
+    
+    const msg = ref("This is demo net work");
+
+    const complete = (data) => {
+        console.log("GET INFO =>", data);
+    };
 </script>
 ```
 
 Use
-```
+```html
 <template>
     <div id="demo">
         <vue-metamask 
             userMessage="msg" 
-            @onComplete="onComplete"
+            @complete="onComplete"
         >
         </vue-metamask>
     </div>
 </template>
 ```
 ---
+
 ## How to use init connect option
-```
+
+```vue
+<script setup>
+    import { ref } from "vue";
+    import VueMetamask from "vue-metamask";
+    
+    const metamask = ref(null);
+
+    const connect = () => {
+        // Get ref target use init methods
+        metamask.value.init();
+    };
+</script>
 <template>
     <div id="demo">
-
         // close init connect
-        <vue-metamask ref="metamask" :initConnect="false"></vue-metamask>
+        <vue-metamask ref="metamask" :init-connect="false"></vue-metamask>
         
         // click button call Init
         <button @click="connect">connect</button>
     </div>
 </template>
-```
-
-### Get ref target use init methods
-```
-<script>
-    import VueMetamask from 'vue-metamask';
-    export default {
-        components: {
-            VueMetamask,
-        },
-        methods:{
-            connect() {
-                this.$refs.metamask.init();
-            }
-        }
-    }
-</script>
 ```
 
 ---
@@ -106,7 +101,7 @@ Use
 |-----------|-----------|-----------|---------------|
 |initConnect | Boolean    |true (default)| Whether to connect initially |
 |userMessage （ Optional ） | String    |Message| return setting status message|
-|onComplete | Event | Callback | return current data|
+|complete | Event | Callback | return current data|
 
 <br/>
 <br/>
@@ -120,7 +115,7 @@ Use
 | metaMaskAddress | String | 0x09F38A7F...  | Ｍetamask address  | 
 | message   | String    | "message" | User-defined message | 
 | type      | String    | "MAINNET" | MAINNET<br/>NO_INSTALL_METAMASK<br/>NO_LOGIN<br/>NETWORK_ERROR<br/>USER_DENIED_ACCOUNT_AUTHORIZATION | 
-| netID     | String    |    "1"    | User's current network id | 
+| netID     | String    |    1n    | User's current network id | 
 
 
 <br/>
