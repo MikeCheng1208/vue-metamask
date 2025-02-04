@@ -12,11 +12,9 @@ export default defineConfig({
       fileName: (format) => `vue-metamask.${format}.js`,
     },
     rollupOptions: {
-      // 排除 build 那些不想被打包的套件或框架
       external: ["vue"],
       output: {
         extend: true,
-        // 在 UMD 模式下，这是全域變數的名字
         globals: {
           vue: "Vue",
         },
