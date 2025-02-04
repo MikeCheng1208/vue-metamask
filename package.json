@@ -1,7 +1,7 @@
 {
   "name": "vue-metamask",
   "private": true,
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "基於 Vue 底下獲取跟檢查 Metamask 的狀態",
   "type": "module",
   "main": "dist/vue-metamask.cjs.js",
