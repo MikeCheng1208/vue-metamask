@@ -21,11 +21,13 @@
 
 <p align=center>基於 Vue 底下獲取跟檢查 Metamask 的狀態</p>
 
+
 <p align="center">
-<a target="_blank" href="https://www.npmjs.com/package/mike-vue-ui">
+<a target="_blank" href="https://www.npmjs.com/package/vue-metamask">
   <img src="https://nodei.co/npm/vue-metamask.png?downloads=true&downloadRank=true&stars=true" alt="NPM version">
 </a>
 </p>
+
 
 ## Demo
 ![vueMetaMask](../assets/operates.gif)
