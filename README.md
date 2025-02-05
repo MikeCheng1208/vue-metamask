@@ -21,7 +21,7 @@
 <p align=center>Testing Metamask's status with Vue</p>
 
 <p align="center">
-<a target="_blank" href="https://www.npmjs.com/package/mike-vue-ui">
+<a target="_blank" href="https://www.npmjs.com/package/vue-metamask">
   <img src="https://nodei.co/npm/vue-metamask.png?downloads=true&downloadRank=true&stars=true" alt="NPM version">
 </a>
 </p>
