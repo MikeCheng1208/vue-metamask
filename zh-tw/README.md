@@ -57,7 +57,7 @@ npm i vue-metamask -S
     <div id="demo">
         <vue-metamask 
             userMessage="msg" 
-            @complete="onComplete"
+            @complete="connect"
         >
         </vue-metamask>
     </div>
