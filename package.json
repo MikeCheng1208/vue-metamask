@@ -1,6 +1,6 @@
 {
   "name": "vue-metamask",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "基於 Vue 底下獲取跟檢查 Metamask 的狀態",
   "type": "module",
   "main": "dist/vue-metamask.es.js",

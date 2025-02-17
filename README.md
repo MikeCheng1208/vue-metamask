@@ -49,7 +49,7 @@ And then import it:
     
     const msg = ref("This is demo net work");
 
-    const connect = (data) => {
+    const complete = (data) => {
         console.log("GET INFO =>", data);
     };
 </script>
@@ -61,7 +61,7 @@ Use
     <div id="demo">
         <vue-metamask 
             userMessage="msg" 
-            @complete="connect"
+            @complete="complete"
         >
         </vue-metamask>
     </div>
