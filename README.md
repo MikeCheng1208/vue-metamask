@@ -49,7 +49,7 @@ And then import it:
     
     const msg = ref("This is demo net work");
 
-    const complete = (data) => {
+    const connect = (data) => {
         console.log("GET INFO =>", data);
     };
 </script>
