@@ -1,11 +1,17 @@
 {
   "name": "vue-metamask",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "基於 Vue 底下獲取跟檢查 Metamask 的狀態",
   "type": "module",
-  "main": "dist/vue-metamask.cjs.js",
+  "main": "dist/vue-metamask.es.js",
   "module": "dist/vue-metamask.es.js",
   "unpkg": "dist/vue-metamask.iife.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-metamask.es.js",
+      "require": "./dist/vue-metamask.cjs.js"
+    }
+  },
   "files": [
     "dist"
   ],
